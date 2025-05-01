@@ -1,0 +1,7 @@
+---
+- name: Пример плейбука
+  hosts: all
+  tasks:
+    - name: Показать сообщение
+      ansible.builtin.debug:
+        msg: "Привет, мир!"
