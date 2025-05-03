@@ -36,8 +36,11 @@ fi
 if command -v ansible-playbook >/dev/null 2>&1; then
   echo 'Ansible detected'
   find . -type f \( -name "*.yml" -o -name "*.yaml" \) | while read f; do
-    if [[ "$f" == *".github/workflows/"* ]]; then continue; fi
-    echo "→ Ansible playbook: $f"
+    if [[ "$f" == *".github/workflows/"* ]]; then
+      echo "Пропуск служебного файла: $f"
+      continue
+    fi
+    echo "→ Запуск Ansible playbook: $f"
     ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook "$f" -i localhost, -c local --extra-vars "ansible_become_pass=$ANSIBLE_BECOME_PASS" || echo "⚠ Ошибка при запуске $f"
   done
 else
