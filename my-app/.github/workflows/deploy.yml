@@ -1,0 +1,27 @@
+name: Deploy test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: 89.179.242.33
+          username: ubuntu
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            cd /apps/test
+            bash ./deploy.sh
+
+# Примечание:
+# Для успешного подключения добавьте SERVER_PASSWORD в Secrets репозитория GitHub
