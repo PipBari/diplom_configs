@@ -5,5 +5,5 @@
     - name: Создание файла с текстом
       ansible.builtin.copy:
         dest: /tmp/hello.txt
-        content: "Привет из Ansible!!!\n"
+        content: "Привет из Ansible!!!!!!!\n"
         mode: '0644'
