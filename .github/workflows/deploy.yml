@@ -1,4 +1,4 @@
-name: Deploy dasda
+name: Deploy dsdasdasd
 
 on:
   push:
@@ -22,5 +22,5 @@ jobs:
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd /home/ubuntu/apps/dasda
+            cd /home/ubuntu/apps/dsdasdasd
             bash ./deploy.sh
