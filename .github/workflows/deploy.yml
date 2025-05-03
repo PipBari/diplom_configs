@@ -1,4 +1,4 @@
-name: Deploy das
+name: Deploy dsada
 
 on:
   push:
@@ -8,6 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-22.04
+    env:
+      GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      ANSIBLE_BECOME_PASS: ${{ secrets.SERVER_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -18,10 +22,7 @@ jobs:
           host: 89.179.242.33
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
-          envs: GIT_USERNAME,GIT_TOKEN
+          envs: GIT_USERNAME,GIT_TOKEN,ANSIBLE_BECOME_PASS
           script: |
-            cd /home/ubuntu/apps/das
+            cd /home/ubuntu/apps/dsada
             bash ./deploy.sh
-    env:
-      GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
