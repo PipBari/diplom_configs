@@ -1,4 +1,4 @@
-name: Deploy lkasda
+name: Deploy dasda
 
 on:
   push:
@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-22.04
+    env:
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
 
     steps:
       - name: Checkout
@@ -20,5 +22,5 @@ jobs:
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd /home/ubuntu/apps/lkasda
+            cd /home/ubuntu/apps/dasda
             bash ./deploy.sh
