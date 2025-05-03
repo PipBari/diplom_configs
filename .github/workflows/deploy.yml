@@ -1,4 +1,4 @@
-name: Deploy sdsad
+name: Deploy dasdas
 
 on:
   push:
@@ -8,10 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-22.04
-    env:
-      GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,6 +18,10 @@ jobs:
           host: 89.179.242.33
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
+          envs: GIT_USERNAME,GIT_TOKEN
           script: |
-            cd /home/ubuntu/apps/sdsad
+            cd /home/ubuntu/apps/dasdas
             bash ./deploy.sh
+    env:
+      GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
