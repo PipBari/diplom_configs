@@ -1,4 +1,4 @@
-name: Deploy dasd
+name: Deploy dasdas
 
 on:
   push:
@@ -12,7 +12,6 @@ jobs:
       GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
       GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
       ANSIBLE_BECOME_PASS: ${{ secrets.SERVER_PASSWORD }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,4 +23,6 @@ jobs:
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
           envs: GIT_USERNAME,GIT_TOKEN,ANSIBLE_BECOME_PASS
-          script: bash ./deploy.sh
+          script: |
+            cd /home/ubuntu/apps/dasdas
+            bash ./deploy.sh
