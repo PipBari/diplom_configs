@@ -1,4 +1,4 @@
-name: Deploy oeoe
+name: Deploy eeee
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd my-app
+            cd /apps/eeee
             bash ./deploy.sh
 
 # Примечание:
