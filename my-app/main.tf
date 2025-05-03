@@ -2,14 +2,14 @@ terraform {
   required_providers {
     local = {
       source  = "hashicorp/local"
-      version = "~> 2.0"
+      version = "2.4.0"
     }
   }
 }
 
 provider "local" {}
 
-resource "local_file" "example" {
+resource "local_file" "hello_file" {
+  filename = "hello.txt"
   content  = "Привет, Terraform!"
-  filename = "${path.module}/hello.txt"
 }
