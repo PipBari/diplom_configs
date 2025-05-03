@@ -1,9 +1,22 @@
-- name: Простой playbook — создать файл
-  hosts: all
+- name: Полный тестовый плейбук
+  hosts: localhost
   become: true
   tasks:
-    - name: Создание файла с текстом
-      ansible.builtin.copy:
-        dest: /tmp/hello.txt
-        content: "Привет из Ansible!\n"
-        mode: '0644'
+    - name: Убедиться, что директория /opt/test-deploy существует
+      ansible.builtin.file:
+        path: /opt/test-deploy
+        state: directory
+        mode: '0755'
+
+    - name: Записать системную информацию в файл
+      ansible.builtin.shell: |
+        echo "Дата: $(date)" > /opt/test-deploy/info.txt
+        echo "Хост: $(hostname)" >> /opt/test-deploy/info.txt
+      args:
+        creates: /opt/test-deploy/info.txt
+
+    - name: Установить пакет htop
+      ansible.builtin.apt:
+        name: htop
+        state: present
+        update_cache: true
