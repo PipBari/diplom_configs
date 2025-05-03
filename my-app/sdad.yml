@@ -1,0 +1,9 @@
+- name: Простой playbook — создать файл
+  hosts: all
+  become: true
+  tasks:
+    - name: Создание файла с текстом
+      ansible.builtin.copy:
+        dest: /home/ubuntu/bb.txt
+        content: "Пока ансибл(((\n"
+        mode: '0644'
