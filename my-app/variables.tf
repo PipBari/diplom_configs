@@ -7,5 +7,5 @@ variable "cpu" {
 variable "ram" {
   description = "Объём оперативной памяти в МБ"
   type        = number
-  default     = 2048
+  default     = 5000
 }
