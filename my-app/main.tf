@@ -1,3 +1,4 @@
+# main.tf
 terraform {
   required_providers {
     local = {
@@ -9,7 +10,12 @@ terraform {
 
 provider "local" {}
 
-resource "local_file" "hello_file" {
-  filename = "hello.txt"
-  content  = "Привет, Terraform!!"
+resource "local_file" "hello_file_1" {
+  filename = "file1.txt"
+  content  = "Привет из первого ресурса"
+}
+
+resource "local_file" "hello_file_2" {
+  filename = "file2.txt"
+  content  = "Привет из второго ресурса"
 }
