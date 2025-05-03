@@ -1,4 +1,4 @@
-name: Deploy kavo
+name: Deploy lkasda
 
 on:
   push:
@@ -20,5 +20,5 @@ jobs:
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd /home/ubuntu/apps/kavo
+            cd /home/ubuntu/apps/lkasda
             bash ./deploy.sh
