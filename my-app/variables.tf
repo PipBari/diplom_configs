@@ -1,11 +1,11 @@
 variable "cpu" {
   description = "Количество виртуальных CPU"
   type        = number
-  default     = 2
+  default     = 0.3
 }
 
 variable "ram" {
   description = "Объём оперативной памяти в МБ"
   type        = number
-  default     = 512
+  default     = 1024
 }
