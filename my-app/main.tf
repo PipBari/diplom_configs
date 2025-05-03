@@ -10,6 +10,6 @@ terraform {
 provider "local" {}
 
 resource "local_file" "example" {
-  content  = "Hello from Terraform!"
+  content  = "Hello from Terraform! EEEEEEEE"
   filename = "${path.module}/hello.txt"
 }
