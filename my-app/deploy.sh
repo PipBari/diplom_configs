@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-echo "Начинается деплой dsada..."
-cd /home/ubuntu/apps/dsada
+echo "Начинается деплой dasd..."
+mkdir -p /home/ubuntu/apps/dasd
+cd /home/ubuntu/apps/dasd
 
 echo "GIT_USERNAME: $GIT_USERNAME"
 echo "GIT_TOKEN длина: ${#GIT_TOKEN} символов"
@@ -20,10 +21,21 @@ fi
 echo 'Текущий коммит:'
 git log -1 --oneline || true
 
+if command -v terraform >/dev/null 2>&1; then
+  echo 'Terraform detected'
+  find . -type f -name "*.tf" | while read tf_file; do
+    dir=$(dirname "$tf_file")
+    echo "→ Terraform apply в $dir"
+    (cd "$dir" && terraform init && terraform apply -auto-approve)
+  done
+else
+  echo 'Terraform не установлен на сервере'
+fi
+
 if command -v ansible-playbook >/dev/null 2>&1; then
   echo 'Ansible detected'
-  find . -type f \( -name "*.yml" -o -name "*.yaml" \) | while read f; do
-    if [[ "$f" == *".github/workflows/"* ]]; then
+  sb.append("  find . -type f \\( -name \\\"*.yml\\\" -o -name \\\"*.yaml\\\" \\) | while read f; do\n");
+    if [[ "$f" == *.github/workflows/* ]]; then
       echo "Пропуск служебного файла: $f"
       continue
     fi
@@ -32,7 +44,6 @@ if command -v ansible-playbook >/dev/null 2>&1; then
   done
 else
   echo 'Ansible не установлен на сервере'
-  exit 1
 fi
 
 echo "Деплой завершён"
