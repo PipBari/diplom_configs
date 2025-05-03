@@ -1,12 +1,15 @@
 terraform {
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.0"
     }
   }
 }
 
-provider "aws" {
-  region = "us-west-2"
+provider "local" {}
+
+resource "local_file" "example" {
+  content  = "Hello from Terraform!"
+  filename = "${path.module}/hello.txt"
 }
