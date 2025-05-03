@@ -20,7 +20,7 @@ jobs:
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd /apps/eeee
+            cd /home/ubuntu/apps/eeee
             bash ./deploy.sh
 
 # Примечание:
