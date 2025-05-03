@@ -1,4 +1,4 @@
-- name: Полный тестовый плейбукк
+- name: Полный тестовый плейбук
   hosts: localhost
   become: true
   tasks:
