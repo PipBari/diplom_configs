@@ -1,4 +1,4 @@
-name: Deploy dasdas
+name: Deploy dasdasd
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           envs: GIT_USERNAME,GIT_TOKEN
           script: |
-            cd /home/ubuntu/apps/dasdas
+            cd /home/ubuntu/apps/dasdasd
             bash ./deploy.sh
     env:
       GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
