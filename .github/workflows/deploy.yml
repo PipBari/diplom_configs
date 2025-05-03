@@ -1,4 +1,4 @@
-name: Deploy test
+name: Deploy kavo
 
 on:
   push:
@@ -20,5 +20,5 @@ jobs:
           username: ubuntu
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd /home/ubuntu/apps/test
+            cd /home/ubuntu/apps/kavo
             bash ./deploy.sh
