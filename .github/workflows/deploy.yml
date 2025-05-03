@@ -22,6 +22,3 @@ jobs:
           script: |
             cd /home/ubuntu/apps/test
             bash ./deploy.sh
-
-# Примечание:
-# Для успешного подключения добавьте SERVER_PASSWORD в Secrets репозитория GitHub
