@@ -1,0 +1,28 @@
+name: Deploy diplom_test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    env:
+      GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      ANSIBLE_BECOME_PASS: ${{ secrets.SERVER_PASSWORD }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: 85.92.108.64
+          username: root
+          password: ${{ secrets.SERVER_PASSWORD }}
+          envs: GIT_USERNAME,GIT_TOKEN,ANSIBLE_BECOME_PASS
+          script: |
+            cd /home/root/apps/diplom_test
+            bash ./deploy.sh
