@@ -4,6 +4,6 @@
   tasks:
     - name: Создание файла с текстом
       ansible.builtin.copy:
-        dest: /home/hello.txt
+        dest: /home/hello_world.txt
         content: "Hello, World!\n"
         mode: '0644'
