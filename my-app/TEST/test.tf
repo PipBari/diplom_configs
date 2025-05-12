@@ -1,3 +1,3 @@
 variable "ram_chunk1" {
-  default = 10
+  default = 256
 }
