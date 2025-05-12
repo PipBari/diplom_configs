@@ -1,7 +1,7 @@
 variable "ram_mb" {
   description = "Объем оперативной памяти в мегабайтах"
   type        = number
-  default     = 10000
+  default     = 512
 }
 
 resource "local_file" "ram_info" {
