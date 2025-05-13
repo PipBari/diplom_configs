@@ -1,9 +1,66 @@
-- name: Простой playbook - создать файл
+- name: Установка Docker и запуск контейнера PostgreSQL
   hosts: all
   become: true
+  vars:
+    docker_package: docker-ce
+    pip_executable: pip3
+    postgres_container_name: postgres
+    postgres_image: postgres:15
+    postgres_env:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: example_db
   tasks:
-    - name: Создание файла с текстом
-      ansible.builtin.copy:
-        dest: /home/hello_wor.txt
-        content: "Hello, World!\n"
-        mode: '0644'
+
+    - name: Установка зависимостей
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: true
+
+    - name: Добавление GPG ключа Docker
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Добавление репозитория Docker
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+        state: present
+
+    - name: Установка Docker
+      ansible.builtin.apt:
+        name: "{{ docker_package }}"
+        state: present
+        update_cache: true
+
+    - name: Убедиться, что Docker запущен
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Установка pip
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+
+    - name: Установка docker SDK через pip
+      ansible.builtin.pip:
+        name: docker
+        executable: "{{ pip_executable }}"
+
+    - name: Запуск контейнера PostgreSQL
+      community.docker.docker_container:
+        name: "{{ postgres_container_name }}"
+        image: "{{ postgres_image }}"
+        state: started
+        restart_policy: always
+        env: "{{ postgres_env }}"
+        published_ports:
+          - "5432:5432"
