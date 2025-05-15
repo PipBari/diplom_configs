@@ -1,0 +1,11 @@
+- name: Создание текстового файла с Ansible
+  hosts: all
+  become: true
+  tasks:
+    - name: Создать файл с текстом "hellow ansible"
+      ansible.builtin.copy:
+        dest: /home/root/ansible_test.txt
+        content: "hellow ansible\n"
+        owner: root
+        group: root
+        mode: '0644'
