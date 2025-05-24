@@ -9,6 +9,7 @@ echo "GIT_TOKEN длина: ${#GIT_TOKEN} символов"
 
 if [ ! -d .git ]; then
   echo 'Репозиторий не найден, клонируем...'
+  rm -rf .tmp_clone
   git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/PipBari/diplom_configs .tmp_clone
   mv .tmp_clone/.git ./
   cp -r .tmp_clone/* .
