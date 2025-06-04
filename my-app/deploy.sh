@@ -15,8 +15,10 @@ if [ ! -d .git ]; then
   cp -r .tmp_clone/* .
   rm -rf .tmp_clone
 else
-  echo 'Репозиторий уже существует, выполняем git pull'
-  git pull
+  echo 'Репозиторий уже существует, выполняем форсированный сброс'
+  git fetch origin
+  git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+  git clean -fd
 fi
 
 echo 'Текущий коммит:'
@@ -27,10 +29,12 @@ if command -v terraform >/dev/null 2>&1; then
   find . -type f -name "*.tf" | while read tf_file; do
     dir=$(dirname "$tf_file")
     echo "→ Terraform apply в $dir"
+    echo "→ Очистка состояния Terraform в $dir"
+    rm -rf "$dir/.terraform" "$dir/terraform.tfstate" "$dir/terraform.tfstate.backup"
     (cd "$dir" && \
       if [ -f terraform.tfstate.lock.info ]; then \
         echo '→ Обнаружен lock-файл Terraform, пробуем снять'; \
-        LOCK_ID=$(grep -oP '\"ID\":\\s*\"\\K[^\"]+' terraform.tfstate.lock.info); \
+        LOCK_ID=$(grep -oP '"ID":\s*"\K[^"]+' terraform.tfstate.lock.info); \
         echo "→ Снятие lock: $LOCK_ID"; \
         terraform force-unlock "$LOCK_ID" || true; \
       fi && \
@@ -67,3 +71,4 @@ find . -type f -name "*.sh" | while read sh_file; do
 done
 
 echo "Деплой завершён"
+exit 0
