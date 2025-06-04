@@ -27,7 +27,14 @@ if command -v terraform >/dev/null 2>&1; then
   find . -type f -name "*.tf" | while read tf_file; do
     dir=$(dirname "$tf_file")
     echo "→ Terraform apply в $dir"
-    (cd "$dir" && terraform init && terraform apply -auto-approve)
+    (cd "$dir" && \
+      if [ -f terraform.tfstate.lock.info ]; then \
+        echo '→ Обнаружен lock-файл Terraform, пробуем снять'; \
+        LOCK_ID=$(grep -oP '\"ID\":\\s*\"\\K[^\"]+' terraform.tfstate.lock.info); \
+        echo "→ Снятие lock: $LOCK_ID"; \
+        terraform force-unlock "$LOCK_ID" || true; \
+      fi && \
+      terraform init && terraform apply -auto-approve)
   done
 else
   echo 'Terraform не установлен на сервере'
