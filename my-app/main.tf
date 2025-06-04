@@ -6,5 +6,5 @@ variable "ram_mb" {
 
 resource "local_file" "ram_info" {
   content  = "Выделено памяти: ${var.ram_mb} MB\n"
-  filename = "ram_info.txt"
+  filename = "${path.module}/ram_info.txt"
 }
